@@ -45,10 +45,10 @@ module Backbeat
         start_time = Time.now
 
         report_range = {
-          completed_upper_bound: options[:completed_upper_bound] || start_time,
-          completed_lower_bound: options[:completed_lower_bound] || start_time - 24.hours,
-          inconsistent_upper_bound: options[:inconsistent_upper_bound] || start_time - 12.hours,
-          inconsistent_lower_bound: options[:inconsistent_lower_bound] || start_time - 1.year
+          completed_upper_bound: start_time,
+          completed_lower_bound: start_time - (Config.options[:reporting][:completed_lower_bound] || 24.hours).to_i,
+          inconsistent_upper_bound: start_time - (Config.options[:reporting][:inconsistent_upper_bound] || 12.hours).to_i,
+          inconsistent_lower_bound: start_time - (Config.options[:reporting][:inconsistent_lower_bound] || 366.days).to_i
         }
 
         inconsistent_nodes = inconsistent_nodes(report_range)

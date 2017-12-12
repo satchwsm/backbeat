@@ -79,6 +79,27 @@ describe Backbeat::Workers::AsyncWorker do
       expect(Backbeat::Workers::AsyncWorker.jobs.count).to eq(1)
     end
 
+    it "waits for a client complete response if the server receives a connection reset and transitions to server status retrying and client status errored" do
+      node = FactoryGirl.create(:node, user: user, workflow: workflow, current_server_status: :started, current_client_status: :ready)
+
+      allow(HTTParty).to receive(:post) { raise Errno::ECONNRESET }
+      allow(Backbeat::Config).to receive(:options).and_return({connection_error_wait: 0.01})
+
+      expect(Kernel).to receive(:sleep).with(0.01)
+
+      Backbeat::Workers::AsyncWorker.new.perform(
+        Backbeat::Events::StartNode.name,
+        { "node_class" => node.class.name, "node_id" => node.id },
+        { "retries" => 1 }
+      )
+
+      node = node.reload
+      expect(node.current_server_status).to eq(:retrying)
+      expect(node.current_client_status).to eq(:errored)
+
+      expect(Backbeat::Workers::AsyncWorker.jobs.count).to eq(1)
+    end
+
     it "retries the job if there is an error deserializing the node" do
       expect(Backbeat::Node).to receive(:find) { raise "Could not connect to the database" }
 

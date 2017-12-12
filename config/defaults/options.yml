@@ -4,6 +4,7 @@ defaults:
   log: ~
   client_timeout: 172800
   require_auth_token: false
+  connection_error_wait: 30
   alerts:
     email_to: ~
     email_from: ~
@@ -11,3 +12,5 @@ defaults:
     heal_nodes: '0 */2 * * * *'
     daily_activity: '0 12 * * * *'
     log_queues: '0 */5 * * * *'
+  reporting:
+    intervals: ~

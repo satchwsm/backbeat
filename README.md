@@ -1,6 +1,6 @@
 ![Backbeat](documentation/images/backbeat_logo.png)
 
-# Backbeat
+# Backbeat [![Build Status](https://travis-ci.org/groupon/backbeat.svg?branch=master)](https://travis-ci.org/groupon/backbeat)
 
 This is the server application for Backbeat, the open-source workflow service
 by Groupon. For more information on what Backbeat is, and documentation for
@@ -45,7 +45,7 @@ $ bin/docker_console
 
 3. Install any of the supported Ruby versions:
   - JRuby 1.7.3 - 1.7.20
-  - MRI 1.9.3 - 2.1.6
+  - MRI 2.0.0 - 2.3.0
 
 4. Install [Bundler](http://gembundler.com/) if necessary:
 
@@ -120,7 +120,7 @@ $ bin/docker_console
   - [Install on Linux](http://redis.io/topics/quickstart)
 12. Start Web Server and Workers
   - For testing you can run these as daemons or in different terminal windows
-  - For production you will want to use some sort of monitoring on these processes. We provide an option using God as explained [here]().
+  - For production you will want to use some sort of monitoring on these processes.
   - See the Procfile for a summary of the processes
 
   ```bash
