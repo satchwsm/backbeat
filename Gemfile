@@ -16,7 +16,7 @@ group :torquebox do
   end
 end
 
-gem 'activerecord', '~> 4.1.0', require: 'active_record'
+gem 'activerecord', '~> 4.1.14.1', require: 'active_record'
 platform :jruby do
   gem 'activerecord-jdbcpostgresql-adapter'
   gem 'jdbc-postgres'
